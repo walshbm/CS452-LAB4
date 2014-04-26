@@ -1,3 +1,4 @@
+// fragment shading of sphere model
 
 #include "Angel.h"
 #include <iostream>
@@ -5,10 +6,8 @@
 typedef Angel::vec4 point4;
 typedef Angel::vec4 color4;
 
-
 // Model-view and projection matrices uniform location
 GLuint  ModelView, Projection;
-
 
 // Create camera view variables
 point4 at( 0.0, 0.0, 0.0, 1.0 );
@@ -18,9 +17,8 @@ vec4   up( 0.0, 10.0, 0.0, 0.0 );
 // Sperical Coordinate vector (r, theta, phi)
 vec3 sphericaleye( 4.0, M_PI/4.0, M_PI/4.0 ) ;
 
-
 GLfloat size=1;
-GLfloat norm=1/sqrt(3.0); // 1 / sqrt(1^2 + 1^2 + 1^2)
+GLfloat norm=1/sqrt(3.0);
 
 GLfloat vertexarray[]={
 	size,size,-size,
@@ -49,9 +47,7 @@ GLubyte elems[]={
 	7,6,4,5,1,6,2,1
 };
 
-
-// Initialization
-
+// OpenGL initialization
 void
 init()
 {
@@ -86,21 +82,21 @@ init()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(elems),elems,GL_STATIC_DRAW);
 
     // Initialize shader lighting parameters for light 1
-    point4 light_position1( 0.5, -1.4, 2.0, 0.6 );
-    color4 light_ambient1( 1.3, 0.9, -1.2, 1.5 );
-    color4 light_diffuse1( 0.9, 0.4, -0.6, 1.3 );
-    color4 light_specular1( -1.2, 0.0, 0.3, 1.9 );
+    point4 light_position1( 0.5, -1.0, 1.0, 0.0 );
+    color4 light_ambient1( 0.3, 0.2, 0.2, 1.0 );
+    color4 light_diffuse1( -0.9, -0.6, 1.6, 1.4 );
+    color4 light_specular1( 1.0, 0.6, 0.4, -1.0 );
 
     // Initialize shader lighting parameters for light 2
-    point4 light_position2( 1.5, 1.2, -1.5, -0.7 );
-    color4 light_ambient2( -1.2, 0.9, -1.3, 1.2 );
-    color4 light_diffuse2( 1.6, 0.3, 1.9, 0.3 );
-    color4 light_specular2( -0.9, 0.4, 1.0, 1.0 );
+    point4 light_position2( 0.5, 1.0, -1.0, 1.0 );
+    color4 light_ambient2( 0.2, 1.2, 0.3, 1.0 );
+    color4 light_diffuse2( 0.9, 0.6, 1.3, 1.0 );
+    color4 light_specular2( 0.6, 0.6, -1.0, 1.0 );
 
     // Initialize shader material parameters for cube
-    color4 material_ambient( 0.9, 0.75, -0.1, -1.0 );
-    color4 material_diffuse( 0.9, -0.5, 0.3, 1.3 );
-    color4 material_specular( 1.0, 1.8, 0.4, 1.0 );
+    color4 material_ambient( 0.4, 1.25, 0.1, 1.0 );
+    color4 material_diffuse( -0.8, 1.5, -0.2, 1.0 );
+    color4 material_specular( 1.0, -0.8, 0.8, -1.0 );
     float  material_shininess = 16.0;
 
     color4 ambient_product1 = (light_ambient1) * material_ambient;
@@ -139,8 +135,8 @@ init()
     Projection = glGetUniformLocation( program, "Projection" );
     
     glEnable( GL_DEPTH_TEST );
-    }
-
+    
+}
 
 void
 display( void )
@@ -183,7 +179,6 @@ keyboard( unsigned char key, int x, int y )
 	glutPostRedisplay();
 }
 
-
 void
 reshape( int width, int height )
 {
@@ -207,7 +202,6 @@ reshape( int width, int height )
     mat4 projection = Ortho( left, right, bottom, top, zNear, zFar );
     glUniformMatrix4fv( Projection, 1, GL_TRUE, projection );
 }
-
 
 int
 main( int argc, char **argv )

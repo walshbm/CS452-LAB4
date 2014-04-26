@@ -1,6 +1,3 @@
-
-//  --- Angel.h ---
-
 #ifndef __ANGEL_H__
 #define __ANGEL_H__
 
@@ -38,10 +35,6 @@
 // Define a helpful macro for handling offsets into buffer objects
 #define BUFFER_OFFSET( offset )   ((GLvoid*) (offset))
 
-//----------------------------------------------------------------------------
-//
-//  --- Include our class libraries and constants ---
-//
 
 namespace Angel {
 
@@ -49,9 +42,6 @@ namespace Angel {
 GLuint InitShader( const char* vertexShaderFile,
 		   const char* fragmentShaderFile );
 
-//  Defined constant for when numbers are too small to be used in the
-//    denominator of a division operation.  This is only used if the
-//    DEBUG macro is defined.
 const GLfloat  DivideByZeroTolerance = GLfloat(1.0e-07);
 
 //  Degrees-to-radians constant 
@@ -61,9 +51,6 @@ const GLfloat  DegreesToRadians = M_PI / 180.0;
 
 #include "vec.h"
 #include "mat.h"
-//#include "CheckError.h"
-
-// #define Print(x)  do { std::cerr << #x " = " << (x) << std::endl; } while(0)
 
 //  Globally use our namespace in our example programs.
 using namespace Angel;

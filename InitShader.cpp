@@ -3,6 +3,7 @@
 
 namespace Angel {
 
+// Create a NULL-terminated string by reading the provided file
 static char*
 readShaderSource(const char* shaderFile)
 {
@@ -24,7 +25,7 @@ readShaderSource(const char* shaderFile)
 }
 
 
-// Create a GLSL program object using both shader files
+// Create a GLSL program object from vertex and fragment shader files
 GLuint
 InitShader(const char* vShaderFile, const char* fShaderFile)
 {
@@ -70,7 +71,8 @@ InitShader(const char* vShaderFile, const char* fShaderFile)
 	glAttachShader( program, shader );
     }
 
-//    glLinkProgram(program);
+    /* link  and error check */
+    glLinkProgram(program);
 
     GLint  linked;
     glGetProgramiv( program, GL_LINK_STATUS, &linked );
@@ -86,8 +88,10 @@ InitShader(const char* vShaderFile, const char* fShaderFile)
 	exit( EXIT_FAILURE );
     }
 
+    /* use program object */
     glUseProgram(program);
 
     return program;
 }
-}
+
+}  // Close namespace Angel block

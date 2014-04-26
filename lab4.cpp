@@ -1,4 +1,3 @@
-// fragment shading of sphere model
 
 #include "Angel.h"
 #include <iostream>
@@ -50,10 +49,8 @@ GLubyte elems[]={
 	7,6,4,5,1,6,2,1
 };
 
-//----------------------------------------------------------------------------
 
-
-// OpenGL initialization
+// Initialization
 
 void
 init()
@@ -89,21 +86,21 @@ init()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(elems),elems,GL_STATIC_DRAW);
 
     // Initialize shader lighting parameters for light 1
-    point4 light_position1( -0.5, -1.0, 2.0, 0.0 );
-    color4 light_ambient1( 0.3, 0.2, 0.2, 1.0 );
-    color4 light_diffuse1( 0.9, 0.6, 0.6, 1.0 );
-    color4 light_specular1( 1.0, 0.6, 0.6, 1.0 );
+    point4 light_position1( 0.5, -1.4, 2.0, 0.6 );
+    color4 light_ambient1( 1.3, 0.9, -1.2, 1.5 );
+    color4 light_diffuse1( 0.9, 0.4, -0.6, 1.3 );
+    color4 light_specular1( -1.2, 0.0, 0.3, 1.9 );
 
     // Initialize shader lighting parameters for light 2
-    point4 light_position2( 0.5, 1.0, -1.0, 0.0 );
-    color4 light_ambient2( 0.2, 0.2, 0.3, 1.0 );
-    color4 light_diffuse2( 0.6, 0.6, 0.9, 1.0 );
-    color4 light_specular2( 0.6, 0.6, 1.0, 1.0 );
+    point4 light_position2( 1.5, 1.2, -1.5, -0.7 );
+    color4 light_ambient2( -1.2, 0.9, -1.3, 1.2 );
+    color4 light_diffuse2( 1.6, 0.3, 1.9, 0.3 );
+    color4 light_specular2( -0.9, 0.4, 1.0, 1.0 );
 
     // Initialize shader material parameters for cube
-    color4 material_ambient( 0.4, 0.25, 0.1, 1.0 );
-    color4 material_diffuse( 0.8, 0.5, 0.2, 1.0 );
-    color4 material_specular( 0.8, 0.8, 0.8, 1.0 );
+    color4 material_ambient( 0.9, 0.75, -0.1, -1.0 );
+    color4 material_diffuse( 0.9, -0.5, 0.3, 1.3 );
+    color4 material_specular( 1.0, 1.8, 0.4, 1.0 );
     float  material_shininess = 16.0;
 
     color4 ambient_product1 = (light_ambient1) * material_ambient;
@@ -142,11 +139,8 @@ init()
     Projection = glGetUniformLocation( program, "Projection" );
     
     glEnable( GL_DEPTH_TEST );
-    
-    glClearColor( 1.0, 1.0, 1.0, 1.0 ); /* white background */
-}
+    }
 
-//----------------------------------------------------------------------------
 
 void
 display( void )
@@ -158,17 +152,12 @@ display( void )
 	eye.x = sphericaleye.x * sin(sphericaleye.y) * sin(sphericaleye.z);
 	eye.y = sphericaleye.x * cos(sphericaleye.z);
 
-	std::cout << "Eye: (" << eye.x << "," << eye.y << "," << eye.z << ")  \t";
-	std::cout << "Spherical Eye: (" << sphericaleye.x << "," << sphericaleye.y << "," << sphericaleye.z << ")" << std::endl;
-
     mat4 model_view = LookAt( eye, at, up );
     glUniformMatrix4fv( ModelView, 1, GL_TRUE, model_view );
 
     glDrawElements( GL_TRIANGLE_STRIP,sizeof(elems),GL_UNSIGNED_BYTE,NULL);
     glutSwapBuffers();
 }
-
-//----------------------------------------------------------------------------
 
 void
 keyboard( unsigned char key, int x, int y )
@@ -194,7 +183,6 @@ keyboard( unsigned char key, int x, int y )
 	glutPostRedisplay();
 }
 
-//----------------------------------------------------------------------------
 
 void
 reshape( int width, int height )
@@ -220,7 +208,6 @@ reshape( int width, int height )
     glUniformMatrix4fv( Projection, 1, GL_TRUE, projection );
 }
 
-//----------------------------------------------------------------------------
 
 int
 main( int argc, char **argv )
@@ -231,7 +218,7 @@ main( int argc, char **argv )
     glutInitWindowSize( 512, 512 );
     glutInitContextVersion( 2, 1 );
     glutInitContextProfile( GLUT_CORE_PROFILE );
-    glutCreateWindow( "Schwarz - lab4" );
+    glutCreateWindow( "Lab # 4" );
 
     glewInit();
 
